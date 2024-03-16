@@ -22,6 +22,9 @@ func GenerateDataKey(ctx context.Context, keyID string) ([]byte, error) {
 		KeyId:   aws.String(keyID),
 		KeySpec: types.DataKeySpecAes256,
 	})
+	if err != nil {
+		return nil, err
+	}
 
-	return out.CiphertextBlob, err
+	return out.CiphertextBlob, nil
 }
