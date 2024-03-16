@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewRootCommand return cobra command for generate-data-key sub command.
+// NewGenerateDataKeyCommand return cobra command for generate-data-key sub command.
 func NewGenerateDataKeyCommand() *cobra.Command {
 	var (
 		keyID string
