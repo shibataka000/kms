@@ -9,8 +9,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/kms/types"
 )
 
-// GenerateEncryptedDataKey.
-func GenerateEncryptedDataKey(ctx context.Context, keyID string) ([]byte, error) {
+// GenerateDataKey.
+func GenerateDataKey(ctx context.Context, keyID string) ([]byte, error) {
 	cfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
 		return nil, err
@@ -18,7 +18,7 @@ func GenerateEncryptedDataKey(ctx context.Context, keyID string) ([]byte, error)
 
 	client := kms.NewFromConfig(cfg)
 
-	out, err := client.GenerateDataKeyWithoutPlaintext(ctx, &kms.GenerateDataKeyWithoutPlaintextInput{
+	out, err := client.GenerateDataKey(ctx, &kms.GenerateDataKeyInput{
 		KeyId:   aws.String(keyID),
 		KeySpec: types.DataKeySpecAes256,
 	})
@@ -26,5 +26,5 @@ func GenerateEncryptedDataKey(ctx context.Context, keyID string) ([]byte, error)
 		return nil, err
 	}
 
-	return out.CiphertextBlob, nil
+	return out.Plaintext, nil
 }

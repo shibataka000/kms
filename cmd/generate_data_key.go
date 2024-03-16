@@ -20,7 +20,7 @@ func NewGenerateDataKeyCommand() *cobra.Command {
 		Short: "Generate data key.",
 		RunE: func(_ *cobra.Command, _ []string) error {
 			ctx := context.Background()
-			dataKey, err := kms.GenerateEncryptedDataKey(ctx, key)
+			dataKey, err := kms.GenerateDataKey(ctx, key)
 			if err != nil {
 				return err
 			}
