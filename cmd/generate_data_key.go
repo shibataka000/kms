@@ -30,8 +30,8 @@ func NewGenerateDataKeyCommand() *cobra.Command {
 
 	command.Flags().StringVar(&keyID, "key-id", "", "The symmetric encryption KMS key that encrypts the data key")
 	command.Flags().StringVar(&out, "out", "", "The path written data key into")
-	command.MarkFlagRequired("key-id")
-	command.MarkFlagRequired("out")
+	command.MarkFlagRequired("key-id") // nolint:errcheck
+	command.MarkFlagRequired("out")    // nolint:errcheck
 
 	return command
 }
