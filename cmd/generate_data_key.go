@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/shibataka000/kms/aws/kms"
+	"github.com/shibataka000/kms/crypto/kms"
 	"github.com/spf13/cobra"
 )
 
