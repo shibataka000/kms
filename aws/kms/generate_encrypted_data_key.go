@@ -9,8 +9,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/kms/types"
 )
 
-// GenerateDataKey.
-func GenerateDataKey(ctx context.Context, keyID string) ([]byte, error) {
+// GenerateEncryptedDataKey.
+func GenerateEncryptedDataKey(ctx context.Context, keyID string) ([]byte, error) {
 	cfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
 		return nil, err

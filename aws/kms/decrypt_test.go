@@ -26,7 +26,7 @@ func TestDecryptDataKey(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			require := require.New(t)
 			ctx := context.Background()
-			dataKey, err := GenerateDataKey(ctx, tt.keyID)
+			dataKey, err := GenerateEncryptedDataKey(ctx, tt.keyID)
 			require.NoError(err)
 			_, err = Decrypt(ctx, dataKey)
 			require.NoError(err)

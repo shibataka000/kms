@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGenerateDataKey(t *testing.T) {
+func TestGenerateEncryptedDataKey(t *testing.T) {
 	tests := []struct {
 		name  string
 		keyID string
@@ -22,7 +22,7 @@ func TestGenerateDataKey(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			require := require.New(t)
 			ctx := context.Background()
-			_, err := GenerateDataKey(ctx, tt.keyID)
+			_, err := GenerateEncryptedDataKey(ctx, tt.keyID)
 			require.NoError(err)
 		})
 	}
