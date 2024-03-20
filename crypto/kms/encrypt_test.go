@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestEncrypt(t *testing.T) {
+func TestEncryptAndDecrypt(t *testing.T) {
 	tests := []struct {
 		name      string
 		keyID     string
