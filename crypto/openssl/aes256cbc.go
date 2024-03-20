@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-// AES256CBCOption is option for `openssl aes-256-cbc` command.`
+// AES256CBCOption is option for `openssl aes-256-cbc` command.
 type AES256CBCOption struct {
 	Encrypt bool
 	Decrypt bool
