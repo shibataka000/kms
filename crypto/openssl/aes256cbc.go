@@ -2,7 +2,6 @@ package openssl
 
 import (
 	"fmt"
-	"os"
 	"os/exec"
 	"strconv"
 )
@@ -40,14 +39,6 @@ func AES256CBC(opts AES256CBCOption) ([]byte, error) {
 	if opts.Iter != 0 {
 		args = append(args, "-iter", strconv.FormatUint(opts.Iter, 10))
 	}
-	if opts.In != nil {
-		f, err := createTemp(opts.In)
-		if err != nil {
-			return nil, err
-		}
-		defer os.Remove(f.Name())
-		args = append(args, "-in", f.Name())
-	}
 	if opts.Pass != nil {
 		envName := "OPENSSL_PASS"
 		env = append(env, fmt.Sprintf("%s=%s", envName, string(opts.Pass)))
@@ -57,15 +48,16 @@ func AES256CBC(opts AES256CBCOption) ([]byte, error) {
 	cmd := exec.Command("openssl", args...)
 	cmd.Env = append(cmd.Env, env...)
 
-	return cmd.Output()
-}
-
-// createTemp creates a new temporary file and write data into it.
-func createTemp(data []byte) (*os.File, error) {
-	file, err := os.CreateTemp("", "*")
-	if err != nil {
-		return nil, err
+	if opts.In != nil {
+		stdin, err := cmd.StdinPipe()
+		if err != nil {
+			return nil, err
+		}
+		go func() {
+			defer stdin.Close()
+			stdin.Write(opts.In) // nolint:errcheck
+		}()
 	}
-	err = os.WriteFile(file.Name(), data, 0400)
-	return file, err
+
+	return cmd.Output()
 }
