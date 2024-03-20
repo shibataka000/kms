@@ -20,6 +20,7 @@ func Encrypt(ctx context.Context, kmsKeyID string, plaintext []byte, iter uint64
 		Encrypt: true,
 		In:      plaintext,
 		Pass:    dataKey,
+		Salt:    true,
 		PBKDF2:  true,
 		Iter:    iter,
 	})

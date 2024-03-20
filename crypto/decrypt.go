@@ -23,6 +23,7 @@ func Decrypt(ctx context.Context, ciphertext []byte) ([]byte, error) {
 		Decrypt: true,
 		In:      ciphertextObj.Blob,
 		Pass:    dataKey,
+		Salt:    true,
 		PBKDF2:  true,
 		Iter:    ciphertextObj.Iter,
 	})
