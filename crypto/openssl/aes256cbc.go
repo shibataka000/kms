@@ -21,6 +21,7 @@ type AES256CBCOption struct {
 // AES256CBC exec `openssl aes-256-cbc` command.
 func AES256CBC(opts AES256CBCOption) ([]byte, error) {
 	args := []string{"aes-256-cbc"}
+	env := []string{}
 
 	if opts.Encrypt {
 		args = append(args, "-e")
@@ -48,15 +49,15 @@ func AES256CBC(opts AES256CBCOption) ([]byte, error) {
 		args = append(args, "-in", f.Name())
 	}
 	if opts.Pass != nil {
-		f, err := createTemp(opts.Pass)
-		if err != nil {
-			return nil, err
-		}
-		defer os.Remove(f.Name())
-		args = append(args, "-pass", fmt.Sprintf("file:%s", f.Name()))
+		envName := "OPENSSL_PASS"
+		env = append(env, fmt.Sprintf("%s=%s", envName, string(opts.Pass)))
+		args = append(args, "-pass", fmt.Sprintf("env:%s", envName))
 	}
 
-	return exec.Command("openssl", args...).Output()
+	cmd := exec.Command("openssl", args...)
+	cmd.Env = append(cmd.Env, env...)
+
+	return cmd.Output()
 }
 
 // createTemp creates a new temporary file and write data into it.
