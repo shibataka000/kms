@@ -7,6 +7,7 @@ import (
 	"strconv"
 )
 
+// AES256CBCOption is option for `openssl aes-256-cbc` command.`
 type AES256CBCOption struct {
 	Encrypt bool
 	Decrypt bool
@@ -16,6 +17,7 @@ type AES256CBCOption struct {
 	Iter    uint64
 }
 
+// AES256CBC exec `openssl aes-256-cbc` command.
 func AES256CBC(opts AES256CBCOption) ([]byte, error) {
 	args := []string{"aes-256-cbc"}
 
@@ -51,6 +53,7 @@ func AES256CBC(opts AES256CBCOption) ([]byte, error) {
 	return exec.Command("openssl", args...).Output()
 }
 
+// createTemp creates a new temporary file and write data into it.
 func createTemp(data []byte) (*os.File, error) {
 	file, err := os.CreateTemp("", "*")
 	if err != nil {

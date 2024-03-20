@@ -5,10 +5,12 @@ import (
 	"strconv"
 )
 
+// RandOption is option for `openssl rand` command.
 type RandOption struct {
 	Base64 bool
 }
 
+// Rand exec `openssl rand` command.
 func Rand(num int, opts RandOption) ([]byte, error) {
 	args := []string{"rand"}
 
