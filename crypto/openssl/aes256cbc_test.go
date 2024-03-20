@@ -25,6 +25,7 @@ func TestAES256CBCEncryptAndDecrypt(t *testing.T) {
 				Decrypt: false,
 				In:      []byte{}, // Overwritten in test.
 				Pass:    []byte{}, // Overwritten in test.
+				Salt:    true,
 				PBKDF2:  true,
 				Iter:    10000,
 			},
@@ -33,6 +34,7 @@ func TestAES256CBCEncryptAndDecrypt(t *testing.T) {
 				Decrypt: true,
 				In:      []byte{}, // Overwritten in test.
 				Pass:    []byte{}, // Overwritten in test.
+				Salt:    true,
 				PBKDF2:  true,
 				Iter:    10000,
 			},

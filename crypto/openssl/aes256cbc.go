@@ -13,6 +13,7 @@ type AES256CBCOption struct {
 	Decrypt bool
 	In      []byte
 	Pass    []byte
+	Salt    bool
 	PBKDF2  bool
 	Iter    uint64
 }
@@ -26,6 +27,11 @@ func AES256CBC(opts AES256CBCOption) ([]byte, error) {
 	}
 	if opts.Decrypt {
 		args = append(args, "-d")
+	}
+	if opts.Salt {
+		args = append(args, "-salt")
+	} else {
+		args = append(args, "-nosalt")
 	}
 	if opts.PBKDF2 {
 		args = append(args, "-pbkdf2")
