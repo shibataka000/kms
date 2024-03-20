@@ -37,7 +37,7 @@ func NewEncryptCommand() *cobra.Command {
 	command.Flags().StringVar(&keyID, "key-id", "", "The symmetric encryption KMS key ID that encrypts the data key")
 	command.Flags().StringVar(&in, "in", "", "The path to plaintext file")
 	command.Flags().StringVar(&out, "out", "", "The path to ciphertext file written into")
-	command.Flags().Uint64Var(&iter, "iter", 100000, "Iteration count for PBKDF2. Default is 100000.")
+	command.Flags().Uint64Var(&iter, "iter", 100000, "The iteration count for PBKDF2")
 	command.MarkFlagRequired("key-id") // nolint:errcheck
 	command.MarkFlagRequired("in")     // nolint:errcheck
 	command.MarkFlagRequired("out")    // nolint:errcheck
