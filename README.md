@@ -21,6 +21,7 @@ Flags:
       --iter uint       The iteration count for PBKDF2 (default 100000)
       --key-id string   The symmetric encryption KMS key ID that encrypts the data key
       --out string      The path to ciphertext file written into
+      --rm              If true, delete plaintext file after encryption
 ```
 
 ### Decrypt
@@ -35,6 +36,7 @@ Flags:
   -h, --help         help for decrypt
       --in string    The path to ciphertext file
       --out string   The path to plaintext file written into
+      --rm           If true, delete ciphertext file after decryption
 ```
 
 ## Install

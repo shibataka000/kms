@@ -13,6 +13,7 @@ func NewDecryptCommand() *cobra.Command {
 	var (
 		in  string
 		out string
+		rm  bool
 	)
 
 	command := &cobra.Command{
@@ -28,12 +29,20 @@ func NewDecryptCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return os.WriteFile(out, plaintext, 0644)
+			err = os.WriteFile(out, plaintext, 0644)
+			if err != nil {
+				return err
+			}
+			if rm {
+				return os.Remove(in)
+			}
+			return nil
 		},
 	}
 
 	command.Flags().StringVar(&in, "in", "", "The path to ciphertext file")
 	command.Flags().StringVar(&out, "out", "", "The path to plaintext file written into")
+	command.Flags().BoolVar(&rm, "rm", false, "If true, delete ciphertext file after decryption")
 	command.MarkFlagRequired("in")  // nolint:errcheck
 	command.MarkFlagRequired("out") // nolint:errcheck
 
