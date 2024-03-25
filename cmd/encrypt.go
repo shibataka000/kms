@@ -15,6 +15,7 @@ func NewEncryptCommand() *cobra.Command {
 		in    string
 		out   string
 		iter  uint64
+		rm    bool
 	)
 
 	command := &cobra.Command{
@@ -30,7 +31,14 @@ func NewEncryptCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return os.WriteFile(out, ciphertext, 0644)
+			err = os.WriteFile(out, ciphertext, 0644)
+			if err != nil {
+				return err
+			}
+			if rm {
+				return os.Remove(in)
+			}
+			return nil
 		},
 	}
 
@@ -38,6 +46,7 @@ func NewEncryptCommand() *cobra.Command {
 	command.Flags().StringVar(&in, "in", "", "The path to plaintext file")
 	command.Flags().StringVar(&out, "out", "", "The path to ciphertext file written into")
 	command.Flags().Uint64Var(&iter, "iter", 100000, "The iteration count for PBKDF2")
+	command.Flags().BoolVar(&rm, "rm", false, "If true, delete plaintext file after encryption")
 	command.MarkFlagRequired("key-id") // nolint:errcheck
 	command.MarkFlagRequired("in")     // nolint:errcheck
 	command.MarkFlagRequired("out")    // nolint:errcheck
