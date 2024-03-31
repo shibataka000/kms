@@ -5,6 +5,7 @@ import (
 
 	"github.com/shibataka000/kms/crypto/kms"
 	"github.com/shibataka000/kms/crypto/openssl"
+	"github.com/shibataka000/kms/encoding"
 )
 
 // Encrypt plaintext by envelope encryption.
@@ -39,5 +40,5 @@ func Encrypt(ctx context.Context, kmsKeyID string, plaintext []byte, iter uint64
 		Iter:             iter,
 	}
 
-	return serialize(ciphertextObj)
+	return encoding.Serialize(ciphertextObj)
 }
