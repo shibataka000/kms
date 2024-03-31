@@ -5,11 +5,12 @@ import (
 
 	"github.com/shibataka000/kms/crypto/kms"
 	"github.com/shibataka000/kms/crypto/openssl"
+	"github.com/shibataka000/kms/encoding"
 )
 
 // Decrypt ciphertext by envelope encryption.
 func Decrypt(ctx context.Context, ciphertext []byte) ([]byte, error) {
-	ciphertextObj, err := deserialize(ciphertext)
+	ciphertextObj, err := encoding.Deserialize[Ciphertext](ciphertext)
 	if err != nil {
 		return nil, err
 	}

@@ -3,6 +3,7 @@ package crypto
 import (
 	"testing"
 
+	"github.com/shibataka000/kms/encoding"
 	"github.com/stretchr/testify/require"
 )
 
@@ -24,9 +25,9 @@ func TestSerializeAndDeserialize(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			require := require.New(t)
-			b, err := serialize(tt.ciphertext)
+			b, err := encoding.Serialize(tt.ciphertext)
 			require.NoError(err)
-			ciphertext, err := deserialize(b)
+			ciphertext, err := encoding.Deserialize[Ciphertext](b)
 			require.NoError(err)
 			require.Equal(tt.ciphertext, ciphertext)
 		})
