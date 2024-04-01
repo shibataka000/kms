@@ -3,28 +3,19 @@ package crypto
 import (
 	"context"
 
+	"github.com/shibataka000/kms/crypto/aes"
 	"github.com/shibataka000/kms/crypto/kms"
-	"github.com/shibataka000/kms/crypto/openssl"
 	"github.com/shibataka000/kms/encoding"
 )
 
 // Encrypt plaintext by envelope encryption.
-func Encrypt(ctx context.Context, kmsKeyID string, plaintext []byte, iter uint64) ([]byte, error) {
-	dataKey, err := openssl.Rand(32, openssl.RandOption{
-		Base64: true,
-	})
+func Encrypt(ctx context.Context, kmsKeyID string, plaintext []byte) ([]byte, error) {
+	dataKey, err := aes.GenerateKey(32)
 	if err != nil {
 		return nil, err
 	}
 
-	ciphertext, err := openssl.AES256CBC(openssl.AES256CBCOption{
-		Encrypt: true,
-		In:      plaintext,
-		Pass:    dataKey,
-		Salt:    true,
-		PBKDF2:  true,
-		Iter:    iter,
-	})
+	ciphertext, err := aes.Encrypt(dataKey, plaintext)
 	if err != nil {
 		return nil, err
 	}
@@ -34,11 +25,8 @@ func Encrypt(ctx context.Context, kmsKeyID string, plaintext []byte, iter uint64
 		return nil, err
 	}
 
-	ciphertextObj := Ciphertext{
+	return encoding.Serialize(Ciphertext{
 		Blob:             ciphertext,
 		EncryptedDataKey: encryptedDataKey,
-		Iter:             iter,
-	}
-
-	return encoding.Serialize(ciphertextObj)
+	})
 }
