@@ -11,12 +11,12 @@ func TestEncryptAndDecrypt(t *testing.T) {
 	tests := []struct {
 		name      string
 		keyID     string
-		plaintext string
+		plaintext []byte
 	}{
 		{
 			name:      "EncryptAndDecrypt",
 			keyID:     "alias/shibataka000/kms",
-			plaintext: "Hello World!",
+			plaintext: []byte("Hello World!"),
 		},
 	}
 
@@ -24,11 +24,11 @@ func TestEncryptAndDecrypt(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			require := require.New(t)
 			ctx := context.Background()
-			ciphertext, err := Encrypt(ctx, tt.keyID, []byte(tt.plaintext))
+			ciphertext, err := Encrypt(ctx, tt.keyID, tt.plaintext)
 			require.NoError(err)
 			plaintext, err := Decrypt(ctx, ciphertext)
 			require.NoError(err)
-			require.Equal(tt.plaintext, string(plaintext))
+			require.Equal(tt.plaintext, plaintext)
 		})
 	}
 }
