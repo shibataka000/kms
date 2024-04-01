@@ -14,10 +14,10 @@ Usage:
 
 Flags:
   -h, --help            help for encrypt
-      --in string       The path to plaintext file
-      --key-id string   The symmetric encryption KMS key ID that encrypts the data key
-      --out string      The path to ciphertext file written into
-      --rm              If true, delete plaintext file after encryption
+      --in string       The path to plaintext file.
+      --key-id string   The symmetric encryption KMS key ID that encrypts the data key.
+      --out string      The path to ciphertext file written into. If omitted, ciphertext is written into stdout.
+      --rm              If true, delete plaintext file after encryption.
 ```
 
 ### Decrypt
@@ -30,9 +30,9 @@ Usage:
 
 Flags:
   -h, --help         help for decrypt
-      --in string    The path to ciphertext file
-      --out string   The path to plaintext file written into
-      --rm           If true, delete ciphertext file after decryption
+      --in string    The path to ciphertext file.
+      --out string   The path to plaintext file written into. If omitted, plaintext is written into stdout.
+      --rm           If true, delete ciphertext file after decryption.
 ```
 
 ## Install

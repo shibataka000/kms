@@ -29,7 +29,7 @@ func NewDecryptCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			err = os.WriteFile(out, plaintext, 0644)
+			err = write(out, plaintext)
 			if err != nil {
 				return err
 			}
@@ -40,11 +40,10 @@ func NewDecryptCommand() *cobra.Command {
 		},
 	}
 
-	command.Flags().StringVar(&in, "in", "", "The path to ciphertext file")
-	command.Flags().StringVar(&out, "out", "", "The path to plaintext file written into")
-	command.Flags().BoolVar(&rm, "rm", false, "If true, delete ciphertext file after decryption")
-	command.MarkFlagRequired("in")  // nolint:errcheck
-	command.MarkFlagRequired("out") // nolint:errcheck
+	command.Flags().StringVar(&in, "in", "", "The path to ciphertext file.")
+	command.Flags().StringVar(&out, "out", "", "The path to plaintext file written into. If omitted, plaintext is written into stdout.")
+	command.Flags().BoolVar(&rm, "rm", false, "If true, delete ciphertext file after decryption.")
+	command.MarkFlagRequired("in") // nolint:errcheck
 
 	return command
 }
