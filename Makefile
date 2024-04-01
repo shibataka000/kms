@@ -1,4 +1,4 @@
-.PHONY: setup fmt lint test build install clean vulncheck
+.PHONY: setup fmt lint test unittest build install clean vulncheck
 .DEFAULT_GOAL := build
 
 setup:
@@ -15,6 +15,9 @@ lint:
 
 test:
 	go test ./...
+
+unittest:
+	go test $(shell go list ./... | grep -x -v -e "github.com/shibataka000/kms/crypto" -e "github.com/shibataka000/kms/crypto/kms")
 
 build:
 	go build
