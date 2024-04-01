@@ -3,31 +3,24 @@ package crypto
 import (
 	"context"
 
+	"github.com/shibataka000/kms/crypto/aes"
 	"github.com/shibataka000/kms/crypto/kms"
-	"github.com/shibataka000/kms/crypto/openssl"
 	"github.com/shibataka000/kms/encoding"
 )
 
 // Decrypt ciphertext by envelope encryption.
 func Decrypt(ctx context.Context, ciphertext []byte) ([]byte, error) {
-	ciphertextObj, err := encoding.Deserialize[Ciphertext](ciphertext)
+	cipherObj, err := encoding.Deserialize[Ciphertext](ciphertext)
 	if err != nil {
 		return nil, err
 	}
 
-	dataKey, err := kms.Decrypt(ctx, ciphertextObj.EncryptedDataKey)
+	dataKey, err := kms.Decrypt(ctx, cipherObj.EncryptedDataKey)
 	if err != nil {
 		return nil, err
 	}
 
-	plaintext, err := openssl.AES256CBC(openssl.AES256CBCOption{
-		Decrypt: true,
-		In:      ciphertextObj.Blob,
-		Pass:    dataKey,
-		Salt:    true,
-		PBKDF2:  true,
-		Iter:    ciphertextObj.Iter,
-	})
+	plaintext, err := aes.Decrypt(dataKey, cipherObj.Blob)
 	if err != nil {
 		return nil, err
 	}

@@ -12,13 +12,11 @@ func TestEncryptAndDecrypt(t *testing.T) {
 		name      string
 		keyID     string
 		plaintext string
-		iter      uint64
 	}{
 		{
 			name:      "EncryptAndDecrypt",
 			keyID:     "alias/shibataka000/kms",
 			plaintext: "Hello World!",
-			iter:      10000,
 		},
 	}
 
@@ -26,7 +24,7 @@ func TestEncryptAndDecrypt(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			require := require.New(t)
 			ctx := context.Background()
-			ciphertext, err := Encrypt(ctx, tt.keyID, []byte(tt.plaintext), tt.iter)
+			ciphertext, err := Encrypt(ctx, tt.keyID, []byte(tt.plaintext))
 			require.NoError(err)
 			plaintext, err := Decrypt(ctx, ciphertext)
 			require.NoError(err)
