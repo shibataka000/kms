@@ -19,20 +19,21 @@ func Decrypt(key []byte, ciphertext []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	return unpadding(plaintext), nil
+	return plaintext, nil
 }
 
 // decrypt ciphertext by AES-CBC.
-// Returned plaintext is padded.
 func decrypt(key []byte, ciphertext []byte, iv []byte) ([]byte, error) {
+	plaintext := make([]byte, len(ciphertext))
+
 	b, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
 	bm := cipher.NewCBCDecrypter(b, iv)
-	plaintext := make([]byte, len(ciphertext))
 	bm.CryptBlocks(plaintext, ciphertext)
-	return plaintext, nil
+
+	return unpadding(plaintext), nil
 }
 
 // unpadding by PKCS#7.

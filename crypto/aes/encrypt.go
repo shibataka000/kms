@@ -16,7 +16,7 @@ func Encrypt(key []byte, plaintext []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	ciphertext, err := encrypt(key, padding(plaintext), iv)
+	ciphertext, err := encrypt(key, plaintext, iv)
 	if err != nil {
 		return nil, err
 	}
@@ -28,15 +28,17 @@ func Encrypt(key []byte, plaintext []byte) ([]byte, error) {
 }
 
 // encrypt plaintext by AES-CBC.
-// Plaintext must be padded.
 func encrypt(key []byte, plaintext []byte, iv []byte) ([]byte, error) {
+	padded := padding(plaintext)
+	ciphertext := make([]byte, len(padded))
+
 	b, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
 	bm := cipher.NewCBCEncrypter(b, iv)
-	ciphertext := make([]byte, len(plaintext))
-	bm.CryptBlocks(ciphertext, plaintext)
+	bm.CryptBlocks(ciphertext, padded)
+
 	return ciphertext, nil
 }
 

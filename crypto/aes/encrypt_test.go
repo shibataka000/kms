@@ -66,14 +66,14 @@ func TestEncryptAndDecrypt2(t *testing.T) {
 			require := require.New(t)
 
 			// Test encrypting
-			ciphertext, err := encrypt(tt.key, padding(tt.plaintext), tt.iv)
+			ciphertext, err := encrypt(tt.key, tt.plaintext, tt.iv)
 			require.NoError(err)
 			require.Equal(tt.ciphertext, ciphertext)
 
 			// Test decrypting
 			plaintext, err := decrypt(tt.key, tt.ciphertext, tt.iv)
 			require.NoError(err)
-			require.Equal(tt.plaintext, unpadding(plaintext))
+			require.Equal(tt.plaintext, plaintext)
 		})
 	}
 }
