@@ -12,7 +12,7 @@ func TestBytes(t *testing.T) {
 		n    int
 	}{
 		{
-			name: "32bit",
+			name: "32Byte",
 			n:    32,
 		},
 	}
@@ -20,10 +20,10 @@ func TestBytes(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			require := require.New(t)
-			r, err := Bytes(tt.n)
+			b, err := Bytes(tt.n)
 			require.NoError(err)
-			require.Equal(tt.n, len(r))
-			require.NotEqual(make([]byte, tt.n), r)
+			require.Equal(tt.n, len(b))
+			require.NotEqual(make([]byte, tt.n), b)
 		})
 	}
 }
