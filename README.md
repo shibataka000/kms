@@ -2,9 +2,6 @@
 
 Encrypt and decrypt file by envelope encryption using AWS KMS.
 
-## Requirement
-- OpenSSL
-
 ## Usage
 
 ### Encrypt
