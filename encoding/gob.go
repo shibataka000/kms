@@ -15,7 +15,6 @@ func Serialize[T any](obj T) ([]byte, error) {
 // Deserialize bytes and return object.
 func Deserialize[T any](b []byte) (T, error) {
 	var obj T
-	r := bytes.NewReader(b)
-	err := gob.NewDecoder(r).Decode(&obj)
+	err := gob.NewDecoder(bytes.NewReader(b)).Decode(&obj)
 	return obj, err
 }
