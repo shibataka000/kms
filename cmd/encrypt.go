@@ -30,7 +30,7 @@ func NewEncryptCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			err = os.WriteFile(out, ciphertext, 0644)
+			err = write(out, ciphertext)
 			if err != nil {
 				return err
 			}
@@ -41,13 +41,12 @@ func NewEncryptCommand() *cobra.Command {
 		},
 	}
 
-	command.Flags().StringVar(&keyID, "key-id", "", "The symmetric encryption KMS key ID that encrypts the data key")
-	command.Flags().StringVar(&in, "in", "", "The path to plaintext file")
-	command.Flags().StringVar(&out, "out", "", "The path to ciphertext file written into")
-	command.Flags().BoolVar(&rm, "rm", false, "If true, delete plaintext file after encryption")
+	command.Flags().StringVar(&keyID, "key-id", "", "The symmetric encryption KMS key ID that encrypts the data key.")
+	command.Flags().StringVar(&in, "in", "", "The path to plaintext file.")
+	command.Flags().StringVar(&out, "out", "", "The path to ciphertext file written into. If omitted, ciphertext is written into stdout.")
+	command.Flags().BoolVar(&rm, "rm", false, "If true, delete plaintext file after encryption.")
 	command.MarkFlagRequired("key-id") // nolint:errcheck
 	command.MarkFlagRequired("in")     // nolint:errcheck
-	command.MarkFlagRequired("out")    // nolint:errcheck
 
 	return command
 }
