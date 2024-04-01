@@ -37,5 +37,5 @@ Flags:
 
 ## Install
 ```
-go install github.com/shibataka000/kms@master
+go install github.com/shibataka000/kms@main
 ```
