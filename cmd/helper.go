@@ -7,6 +7,7 @@ import "os"
 func write(name string, data []byte) error {
 	switch name {
 	case "":
+		fallthrough
 	case "stdout":
 		_, err := os.Stdout.Write(data)
 		return err
@@ -16,5 +17,4 @@ func write(name string, data []byte) error {
 	default:
 		return os.WriteFile(name, data, 0644)
 	}
-	return nil
 }
